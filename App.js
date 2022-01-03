@@ -7,54 +7,72 @@
  */
 
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Button,
+  TextInput,
+  ActivityIndicator,
+  Image,
+} from 'react-native';
 import Header from './src/header';
 import Generator from './src/generator';
 import NumList from './src/numlist';
-import Input from './src/input';
+import Picker from './src/picker';
+import Modal from './src/modal';
 
 class App extends Component {
   state = {
-    appName: 'Heyho App',
-    random: [36, 999],
+    myTextInput: '',
+    alphabet: ['a', 'b', 'c'],
   };
 
-  onAddRandomNum = () => {
-    const randomNum = Math.floor(Math.random() * 100) + 1;
+  onChangeInput = e => {
+    this.setState({
+      myTextInput: e,
+    });
+  };
+
+  onAddTextInput = () => {
     this.setState(prevState => {
       return {
-        random: [...prevState.random, randomNum],
+        myTextInput: '',
+        alphabet: [...prevState.alphabet, prevState.myTextInput],
       };
-    });
-  };
-
-  onNumDelete = idx => {
-    const newArray = this.state.random.filter((num, index) => {
-      return idx != index;
-    });
-    this.setState({
-      random: newArray,
     });
   };
 
   render() {
     return (
       <View style={styles.mainView}>
-        {/* <Header name={this.state.appName} />
-        <View>
-          <Text
-            style={styles.mainText}
-            onPress={() => alert('text touch event')}>
-            Hello world
-          </Text>
-        </View>
+        {/* <ActivityIndicator size="large" color="green" animating={true} />
+        <Picker />
+        <TextInput
+          value={this.state.myTextInput}
+          style={styles.input}
+          onChangeText={this.onChangeInput}
+          multiline={true}
+        />
+        <Button title="Add Text Input" onPress={this.onAddTextInput} />
 
-        <ScrollView style={{width: '100%'}}>
-          <Generator add={this.onAddRandomNum} />
-          <NumList num={this.state.random} delete={this.onNumDelete} />
+        <ScrollView styles={{width: '100%'}}>
+          {this.state.alphabet.map((item, idx) => (
+            <Text key={idx} style={styles.mainText}>
+              {item}
+            </Text>
+          ))}
         </ScrollView> */}
 
-        <Input />
+        {/* <Image
+          style={styles.Logo}
+          source={{
+            uri: 'https://cdn.pixabay.com/photo/2021/10/07/15/12/wine-6688901_1280.jpg',
+          }}
+        /> */}
+
+        <Modal />
       </View>
     );
   }
@@ -71,9 +89,26 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
   },
 
-  mainText: {
-    padding: 5,
-    alignItems: 'center',
+  input: {
     width: '100%',
+    backgroundColor: '#cecece',
+    marginTop: 20,
+    fontSize: 25,
+    padding: 10,
+  },
+
+  mainText: {
+    fontSize: 20,
+    fontWeight: 'normal',
+    color: 'red',
+    padding: 20,
+    margin: 20,
+    backgroundColor: 'pink',
+  },
+
+  Logo: {
+    width: '100%',
+    height: 300,
+    resizeMode: 'cover',
   },
 });
